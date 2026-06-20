@@ -6,6 +6,9 @@ public class EnemyMeleeAttackAction : TimedEnemyAction
     public float hitTime = 0.35f;
     public float hitRange = 1.6f;
 
+    [Header("Block")]
+    public float staminaDamageOnBlock = 3f;
+
     [Header("Backstep After Attacks")]
     public int minAttacksBeforeBackstep = 1;
     public int maxAttacksBeforeBackstep = 3;
@@ -31,6 +34,12 @@ public class EnemyMeleeAttackAction : TimedEnemyAction
             return false;
 
         if (Controller.CurrentState == EnemyState.Backstep)
+            return false;
+
+        if (Controller.CurrentState == EnemyState.Block)
+            return false;
+
+        if (Controller.IsInIdlePause)
             return false;
 
         return Sensor.HasTargetInAttackRange();
@@ -126,7 +135,24 @@ public class EnemyMeleeAttackAction : TimedEnemyAction
             damage = enemyHealth.attackDamage;
         }
 
-        damageable.TakeDamage(damage, gameObject);
+        Vector3 attackDirection = target.position - transform.position;
+        attackDirection.y = 0f;
+
+        if (attackDirection.sqrMagnitude < 0.01f)
+        {
+            attackDirection = transform.forward;
+        }
+
+        DamageInfo info = new DamageInfo(
+            damage,
+            staminaDamageOnBlock,
+            gameObject,
+            target.position,
+            attackDirection,
+            true
+        );
+
+        damageable.TakeDamage(info);
     }
 
     private void OnDrawGizmosSelected()

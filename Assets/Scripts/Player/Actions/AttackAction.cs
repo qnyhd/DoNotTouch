@@ -10,14 +10,20 @@ public class AttackAction : TimedPlayerAction
     public float attackRange = 1.4f;
     public float attackRadius = 0.7f;
 
+    [Header("Block")]
+    public float staminaDamageOnBlock = 3f;
+
     public LayerMask hittableLayers = ~0;
 
     private bool hasHit;
     private PlayerHealth playerHealth;
+
     private readonly HashSet<IDamageable> hitTargets = new HashSet<IDamageable>();
 
     public override int Priority => 90;
     public override bool BlocksOtherActions => true;
+
+    public bool IsAttacking => IsActive;
 
     private void Awake()
     {
@@ -60,7 +66,12 @@ public class AttackAction : TimedPlayerAction
     private void HitTargets()
     {
         Vector3 center = transform.position + transform.forward * attackRange;
-        Collider[] colliders = Physics.OverlapSphere(center, attackRadius, hittableLayers);
+
+        Collider[] colliders = Physics.OverlapSphere(
+            center,
+            attackRadius,
+            hittableLayers
+        );
 
         int damage = 2;
 
@@ -86,7 +97,17 @@ public class AttackAction : TimedPlayerAction
                 continue;
 
             hitTargets.Add(damageable);
-            damageable.TakeDamage(damage, gameObject);
+
+            DamageInfo info = new DamageInfo(
+                damage,
+                staminaDamageOnBlock,
+                gameObject,
+                col.ClosestPoint(transform.position),
+                transform.forward,
+                true
+            );
+
+            damageable.TakeDamage(info);
         }
     }
 

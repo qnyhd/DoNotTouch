@@ -15,14 +15,17 @@ public class EnemyActionController : MonoBehaviour
 
     public bool IsMovementLocked { get; private set; }
 
-    [Header("Pause")]
-    public float idlePauseAfterBackstep = 0.35f;
+    [Header("Random Idle After Backstep")]
+    public float minIdleAfterBackstep = 0.4f;
+    public float maxIdleAfterBackstep = 1.2f;
 
     private float idlePauseTimer;
 
     private EnemyAction[] actions;
 
     private bool backstepRequested;
+
+    public bool IsInIdlePause => idlePauseTimer > 0f;
 
     private void Awake()
     {
@@ -87,10 +90,16 @@ public class EnemyActionController : MonoBehaviour
         IsMovementLocked = true;
     }
 
-    public void StartIdlePauseAfterBackstep()
+    public void StartRandomIdlePauseAfterBackstep()
     {
-        idlePauseTimer = idlePauseAfterBackstep;
+        float min = Mathf.Min(minIdleAfterBackstep, maxIdleAfterBackstep);
+        float max = Mathf.Max(minIdleAfterBackstep, maxIdleAfterBackstep);
+
+        idlePauseTimer = UnityEngine.Random.Range(min, max);
+
         IsMovementLocked = true;
+        CurrentState = EnemyState.Idle;
+
         Motor.ForceStop();
         Anim.SetSpeed(0f);
     }

@@ -64,7 +64,7 @@ public class EnemyBackstepAction : TimedEnemyAction
         Motor.ForceStop();
         Anim.SetSpeed(0f);
 
-        Controller.StartIdlePauseAfterBackstep();
+        Controller.StartRandomIdlePauseAfterBackstep();
 
         Controller.SetState(EnemyState.Idle);
     }
