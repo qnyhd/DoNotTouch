@@ -223,6 +223,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1599761595}
+    - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1599761599}
+    - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1599761598}
   m_SourcePrefab: {fileID: 100100000, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
 --- !u!4 &885179630 stripped
 Transform:
@@ -327,6 +333,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1526197159}
+    - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1526197164}
+    - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1526197163}
+    - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1526197162}
   m_SourcePrefab: {fileID: 100100000, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
 --- !u!1 &1468317651
 GameObject:
@@ -511,6 +526,7 @@ MonoBehaviour:
   cooldown: 0.4
   hitTime: 0.35
   hitRange: 2.06
+  staminaDamageOnBlock: 3
   minAttacksBeforeBackstep: 1
   maxAttacksBeforeBackstep: 3
 --- !u!114 &1526197149
@@ -549,7 +565,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bd4c09df9a92e54f8c3553ea13549f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyActionController
-  idlePauseAfterBackstep: 0.5
+  minIdleAfterBackstep: 0.4
+  maxIdleAfterBackstep: 1.2
 --- !u!114 &1526197152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -650,6 +667,55 @@ MonoBehaviour:
   duration: 0.47
   cooldown: 0
   backstepSpeed: 3.5
+--- !u!114 &1526197162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526197147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9858dbe798a087349b93b7f3854d431f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHitReactAction
+--- !u!114 &1526197163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526197147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7399ad45aa716ce41baeb3f12cb8ef3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyBlockAction
+  blockAngle: 180
+  holdStaminaCostPerSecond: 0.8
+  blockStaminaCost: 3
+  decisionInterval: 0.2
+  blockChance: 0.75
+  blockDetectDistance: 2.5
+  minBlockDuration: 0.5
+  maxBlockDuration: 1.2
+  guardBreakDuration: 0.8
+--- !u!114 &1526197164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526197147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a830b1544b5bcd4d93f292a64be7aa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CombatStamina
+  maxStamina: 10
+  currentStamina: 10
+  recoverPerSecond: 2
+  recoverDelayAfterConsume: 0.5
 --- !u!1 &1599761582 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
@@ -710,6 +776,7 @@ MonoBehaviour:
   hitTime: 0.25
   attackRange: 0.48
   attackRadius: 1.16
+  staminaDamageOnBlock: 3
   hittableLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -834,6 +901,38 @@ MonoBehaviour:
   currentHealth: 0
   attackDamage: 2
   hitStunDuration: 0.35
+--- !u!114 &1599761598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599761582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6115e127573fec243a42bc60ed61705b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerBlockAction
+  blockAngle: 180
+  holdStaminaCostPerSecond: 1
+  blockStaminaCost: 3
+  guardBreakDuration: 0.8
+--- !u!114 &1599761599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599761582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a830b1544b5bcd4d93f292a64be7aa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CombatStamina
+  maxStamina: 10
+  currentStamina: 10
+  recoverPerSecond: 2
+  recoverDelayAfterConsume: 0.5
 --- !u!1 &1770295786
 GameObject:
   m_ObjectHideFlags: 0

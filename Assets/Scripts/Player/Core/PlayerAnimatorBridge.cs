@@ -16,6 +16,10 @@ public class PlayerAnimatorBridge : MonoBehaviour
     private readonly int hitHash = Animator.StringToHash("Hit");
     private readonly int dieHash = Animator.StringToHash("Die");
 
+    private readonly int blockingHash = Animator.StringToHash("Blocking");
+    private readonly int blockCounterHash = Animator.StringToHash("BlockCounter");
+    private readonly int guardBreakHash = Animator.StringToHash("GuardBreak");
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -38,6 +42,11 @@ public class PlayerAnimatorBridge : MonoBehaviour
     public void SetGrounded(bool isGrounded)
     {
         animator.SetBool(groundedHash, isGrounded);
+    }
+
+    public void SetBlocking(bool isBlocking)
+    {
+        animator.SetBool(blockingHash, isBlocking);
     }
 
     public void TriggerJump()
@@ -63,5 +72,15 @@ public class PlayerAnimatorBridge : MonoBehaviour
     public void TriggerDie()
     {
         animator.SetTrigger(dieHash);
+    }
+
+    public void TriggerBlockCounter()
+    {
+        animator.SetTrigger(blockCounterHash);
+    }
+
+    public void TriggerGuardBreak()
+    {
+        animator.SetTrigger(guardBreakHash);
     }
 }

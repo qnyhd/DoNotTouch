@@ -4,6 +4,7 @@ public enum EnemyState
     Chase,
     Attack,
     Backstep,
+    Block,
     Hit,
     Dead
 }

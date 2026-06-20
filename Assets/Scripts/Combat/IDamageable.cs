@@ -4,5 +4,5 @@ public interface IDamageable
 {
     bool IsDead { get; }
 
-    void TakeDamage(int damage, GameObject attacker);
+    void TakeDamage(DamageInfo info);
 }
