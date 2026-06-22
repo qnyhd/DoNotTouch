@@ -10,6 +10,11 @@ public class EnemyBlockAction : EnemyAction, IBlockHandler
         GuardBreak
     }
 
+    [Header("Block Cooldown")]
+    public float blockCooldownAfterEnd = 0.6f;
+
+    private float blockCooldownTimer;
+
     [Header("Block")]
     public float blockAngle = 180f;
     public float holdStaminaCostPerSecond = 0.8f;
@@ -41,6 +46,14 @@ public class EnemyBlockAction : EnemyAction, IBlockHandler
     private CombatStamina stamina;
     private EnemyHealth health;
 
+    [Header("Backstep After Blocks")]
+    public int minBlocksBeforeBackstep = 1;
+    public int maxBlocksBeforeBackstep = 3;
+    public float backstepChanceAfterBlocks = 0.6f;
+
+    private int blockSuccessCount;
+    private int nextBackstepBlockCount;
+
     public override int Priority => 110;
 
     public override bool IsActive
@@ -64,10 +77,16 @@ public class EnemyBlockAction : EnemyAction, IBlockHandler
     {
         stamina = GetComponent<CombatStamina>();
         health = GetComponent<EnemyHealth>();
+        ResetBackstepBlockCount();
     }
 
     public override void TickAction(float deltaTime)
     {
+        if (blockCooldownTimer > 0f)
+        {
+            blockCooldownTimer -= deltaTime;
+        }
+
         if (health != null && health.IsDead)
         {
             ForceEndBlock();
@@ -187,6 +206,9 @@ public class EnemyBlockAction : EnemyAction, IBlockHandler
 
     private bool ShouldEnemyStartBlock()
     {
+        if (blockCooldownTimer > 0f)
+            return false;
+
         if (stamina == null)
             return false;
 
@@ -208,9 +230,6 @@ public class EnemyBlockAction : EnemyAction, IBlockHandler
         if (Controller.CurrentState == EnemyState.Dead)
             return false;
 
-        if (Controller.HasActiveExclusiveAction(this))
-            return false;
-
         if (!Sensor.HasTarget())
             return false;
 
@@ -222,7 +241,8 @@ public class EnemyBlockAction : EnemyAction, IBlockHandler
         if (playerAttack == null)
             return false;
 
-        if (!playerAttack.IsAttacking)
+        // 关键：敌人只在玩家这一刀还没真正命中前格挡
+        if (!playerAttack.CanEnemyBlockReact)
             return false;
 
         return Random.value <= blockChance;
@@ -320,6 +340,8 @@ public class EnemyBlockAction : EnemyAction, IBlockHandler
     {
         state = BlockState.None;
 
+        blockCooldownTimer = blockCooldownAfterEnd;
+
         Motor.ForceStop();
         Anim.SetSpeed(0f);
         Anim.SetBlocking(false);
@@ -342,6 +364,11 @@ public class EnemyBlockAction : EnemyAction, IBlockHandler
         blockCounterTimer = 0f;
         guardBreakTimer = 0f;
 
+        blockCooldownTimer = blockCooldownAfterEnd;
+
+        Motor.ForceStop();
+
+        Anim.SetSpeed(0f);
         Anim.SetBlocking(false);
     }
 
@@ -389,7 +416,33 @@ public class EnemyBlockAction : EnemyAction, IBlockHandler
             return BlockResult.GuardBroken;
         }
 
+        blockSuccessCount++;
+
+        if (blockSuccessCount >= nextBackstepBlockCount)
+        {
+            blockSuccessCount = 0;
+            ResetBackstepBlockCount();
+
+            if (Random.value <= backstepChanceAfterBlocks)
+            {
+                Controller.RequestBackstep();
+            }
+        }
+
         StartBlockCounter();
         return BlockResult.Blocked;
+    }
+
+    private void ResetBackstepBlockCount()
+    {
+        if (maxBlocksBeforeBackstep < minBlocksBeforeBackstep)
+        {
+            maxBlocksBeforeBackstep = minBlocksBeforeBackstep;
+        }
+
+        nextBackstepBlockCount = Random.Range(
+            minBlocksBeforeBackstep,
+            maxBlocksBeforeBackstep + 1
+        );
     }
 }

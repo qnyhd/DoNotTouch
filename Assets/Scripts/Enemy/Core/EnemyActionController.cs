@@ -16,14 +16,16 @@ public class EnemyActionController : MonoBehaviour
     public bool IsMovementLocked { get; private set; }
 
     [Header("Random Idle After Backstep")]
-    public float minIdleAfterBackstep = 0.4f;
-    public float maxIdleAfterBackstep = 1.2f;
+    public float minIdleAfterBackstep = 0.2f;
+    public float maxIdleAfterBackstep = 0.5f;
 
     private float idlePauseTimer;
 
     private EnemyAction[] actions;
 
     private bool backstepRequested;
+    private bool strafeRequested;
+    private bool forceStrafeRequested;
 
     public bool IsInIdlePause => idlePauseTimer > 0f;
 
@@ -50,6 +52,7 @@ public class EnemyActionController : MonoBehaviour
         {
             Motor.ForceStop();
             Anim.SetSpeed(0f);
+            Anim.SetStrafing(false);
             Motor.Tick(Time.deltaTime);
             return;
         }
@@ -67,6 +70,7 @@ public class EnemyActionController : MonoBehaviour
 
             Motor.ForceStop();
             Anim.SetSpeed(0f);
+            Anim.SetStrafing(false);
 
             Motor.Tick(Time.deltaTime);
             return;
@@ -102,6 +106,7 @@ public class EnemyActionController : MonoBehaviour
 
         Motor.ForceStop();
         Anim.SetSpeed(0f);
+        Anim.SetStrafing(false);
     }
 
     public void RequestBackstep()
@@ -115,6 +120,28 @@ public class EnemyActionController : MonoBehaviour
             return false;
 
         backstepRequested = false;
+        return true;
+    }
+
+    public void RequestStrafe(bool force = false)
+    {
+        strafeRequested = true;
+
+        if (force)
+        {
+            forceStrafeRequested = true;
+        }
+    }
+
+    public bool ConsumeStrafeRequest(out bool force)
+    {
+        force = forceStrafeRequested;
+
+        if (!strafeRequested)
+            return false;
+
+        strafeRequested = false;
+        forceStrafeRequested = false;
         return true;
     }
 

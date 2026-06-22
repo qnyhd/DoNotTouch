@@ -13,6 +13,7 @@ public class EnemyIdleAction : EnemyAction
         {
             Motor.ForceStop();
             Anim.SetSpeed(0f);
+            Anim.SetStrafing(false);
             return;
         }
 
@@ -21,6 +22,7 @@ public class EnemyIdleAction : EnemyAction
             Controller.SetState(EnemyState.Idle);
             Motor.ForceStop();
             Anim.SetSpeed(0f);
+            Anim.SetStrafing(false);
             return;
         }
 
@@ -29,6 +31,7 @@ public class EnemyIdleAction : EnemyAction
             Controller.SetState(EnemyState.Idle);
             Motor.ForceStop();
             Anim.SetSpeed(0f);
+            Anim.SetStrafing(false);
         }
     }
 }

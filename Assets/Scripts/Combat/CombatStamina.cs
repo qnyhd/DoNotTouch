@@ -12,6 +12,8 @@ public class CombatStamina : MonoBehaviour
 
     private float recoverDelayTimer;
 
+    private float recoverMultiplier = 1f;
+
     public bool IsEmpty => currentStamina <= 0.01f;
 
     public float Normalized
@@ -65,12 +67,22 @@ public class CombatStamina : MonoBehaviour
         return hadEnough;
     }
 
-    public void Recover(float deltaTime)
+    public void SetRecoverMultiplier(float multiplier)
+    {
+        recoverMultiplier = Mathf.Max(0f, multiplier);
+    }
+
+    public void ResetRecoverMultiplier()
+    {
+        recoverMultiplier = 1f;
+    }
+
+    private void Recover(float deltaTime)
     {
         if (currentStamina >= maxStamina)
             return;
 
-        currentStamina += recoverPerSecond * deltaTime;
+        currentStamina += recoverPerSecond * recoverMultiplier * deltaTime;
 
         if (currentStamina > maxStamina)
         {

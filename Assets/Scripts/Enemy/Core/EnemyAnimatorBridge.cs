@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 public class EnemyAnimatorBridge : MonoBehaviour
@@ -6,6 +7,10 @@ public class EnemyAnimatorBridge : MonoBehaviour
     private Animator animator;
 
     private readonly int speedHash = Animator.StringToHash("Speed");
+
+    private readonly int strafeXHash = Animator.StringToHash("StrafeX");
+    private readonly int strafeLeftHash = Animator.StringToHash("StrafeLeft");
+
     private readonly int attackHash = Animator.StringToHash("Attack");
     private readonly int backstepHash = Animator.StringToHash("Backstep");
     private readonly int hitHash = Animator.StringToHash("Hit");
@@ -23,6 +28,16 @@ public class EnemyAnimatorBridge : MonoBehaviour
     public void SetSpeed(float speed)
     {
         animator.SetFloat(speedHash, speed, 0.1f, Time.deltaTime);
+    }
+
+    public void SetStrafing(bool isStrafing)
+    {
+        animator.SetBool(strafeXHash, isStrafing);
+    }
+
+    public void SetStrafeLeft(bool isLeft)
+    {
+        animator.SetBool(strafeLeftHash, isLeft);
     }
 
     public void SetBlocking(bool isBlocking)

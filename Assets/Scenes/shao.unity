@@ -207,6 +207,12 @@ PrefabInstance:
       addedObject: {fileID: 1599761590}
     - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1599761596}
+    - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1599761599}
+    - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 1599761589}
     - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       insertIndex: -1
@@ -219,13 +225,7 @@ PrefabInstance:
       addedObject: {fileID: 1599761586}
     - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1599761596}
-    - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1599761595}
-    - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1599761599}
     - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1599761598}
@@ -246,6 +246,10 @@ PrefabInstance:
     - target: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -320,6 +324,12 @@ PrefabInstance:
       addedObject: {fileID: 1526197151}
     - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1526197158}
+    - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1526197164}
+    - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 1526197150}
     - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       insertIndex: -1
@@ -329,19 +339,16 @@ PrefabInstance:
       addedObject: {fileID: 1526197148}
     - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1526197158}
-    - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1526197159}
     - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1526197164}
-    - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1526197163}
+      addedObject: {fileID: 1526197167}
     - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1526197162}
+    - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1526197163}
   m_SourcePrefab: {fileID: 100100000, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
 --- !u!1 &1468317651
 GameObject:
@@ -541,6 +548,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6b48ff9d54334e4ca957ac7b91c1bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyChaseAction
+  strafeDecisionInterval: 0.8
+  strafeChance: 0.35
+  minDistanceToStrafe: 2.2
+  maxDistanceToStrafe: 6
 --- !u!114 &1526197150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -691,15 +702,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7399ad45aa716ce41baeb3f12cb8ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBlockAction
+  blockCooldownAfterEnd: 0.5
   blockAngle: 180
   holdStaminaCostPerSecond: 0.8
   blockStaminaCost: 3
-  decisionInterval: 0.2
-  blockChance: 0.75
-  blockDetectDistance: 2.5
-  minBlockDuration: 0.5
-  maxBlockDuration: 1.2
+  minStaminaToStartBlock: 0.1
+  decisionInterval: 0.05
+  blockChance: 0.8
+  blockDetectDistance: 4
+  minBlockDuration: 0.35
+  maxBlockDuration: 0.6
+  blockCounterDuration: 0.65
   guardBreakDuration: 0.8
+  minBlocksBeforeBackstep: 1
+  maxBlocksBeforeBackstep: 3
+  backstepChanceAfterBlocks: 0.6
 --- !u!114 &1526197164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -716,6 +733,24 @@ MonoBehaviour:
   currentStamina: 10
   recoverPerSecond: 2
   recoverDelayAfterConsume: 0.5
+--- !u!114 &1526197167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526197147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 963c07456ddaa1f43bfba2173dfb6463, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStrafeAction
+  duration: 0.8
+  cooldown: 1
+  strafeSpeed: 2.2
+  minStrafeDuration: 0.5
+  maxStrafeDuration: 1.2
+  stopStrafeDistance: 1.8
 --- !u!1 &1599761582 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
@@ -770,10 +805,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d974ed45a699a14d84ddd9485631428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackAction
-  duration: 0.3
+  duration: 0.6
   cooldown: 0.2
   stopMoveWhenAttack: 1
-  hitTime: 0.25
+  hitTime: 0.4
   attackRange: 0.48
   attackRadius: 1.16
   staminaDamageOnBlock: 3
@@ -914,8 +949,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBlockAction
   blockAngle: 180
-  holdStaminaCostPerSecond: 1
   blockStaminaCost: 3
+  minStaminaToStartBlock: 1
+  blockingRecoverMultiplier: 0.35
+  blockMoveSpeed: 1.8
+  blockCounterDuration: 0.65
   guardBreakDuration: 0.8
 --- !u!114 &1599761599
 MonoBehaviour:

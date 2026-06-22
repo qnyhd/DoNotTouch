@@ -3,6 +3,25 @@ using UnityEngine;
 
 public class AttackAction : TimedPlayerAction
 {
+    public bool IsAttacking => IsActive;
+
+    // 这一刀是否已经打出伤害
+    public bool HasHitThisAttack { get; private set; }
+
+    // 敌人是否还能对这一刀做出格挡反应
+    public bool CanEnemyBlockReact
+    {
+        get
+        {
+            return IsActive && !HasHitThisAttack;
+        }
+    }
+
+    // 为了兼容你之前写过的 EnemyBlockAction
+    public bool IsAttackThreatening => CanEnemyBlockReact;
+
+    
+
     [Header("Attack")]
     public bool stopMoveWhenAttack = true;
 
@@ -23,7 +42,7 @@ public class AttackAction : TimedPlayerAction
     public override int Priority => 90;
     public override bool BlocksOtherActions => true;
 
-    public bool IsAttacking => IsActive;
+    
 
     private void Awake()
     {
@@ -41,6 +60,7 @@ public class AttackAction : TimedPlayerAction
     protected override void OnStart()
     {
         hasHit = false;
+        HasHitThisAttack = false;
         hitTargets.Clear();
 
         Anim.TriggerAttack();
@@ -59,8 +79,15 @@ public class AttackAction : TimedPlayerAction
         if (!hasHit && attackElapsedTime >= hitTime)
         {
             hasHit = true;
+            HasHitThisAttack = true;
+
             HitTargets();
         }
+    }
+
+    protected override void OnEnd()
+    {
+        HasHitThisAttack = false;
     }
 
     private void HitTargets()

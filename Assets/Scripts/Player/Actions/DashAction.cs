@@ -20,21 +20,29 @@ public class DashAction : TimedPlayerAction
         if (health != null && health.IsDead)
             return false;
 
-        return Input.DashPressed;
+        if (!Input.DashPressed)
+            return false;
+
+        // 没有按移动方向，不冲刺
+        if (!Input.HasValidMoveInput)
+            return false;
+
+        // 3个键以上、W+S、A+D 这种非法输入，不冲刺
+        if (Input.InvalidMoveInput)
+            return false;
+
+        return true;
     }
 
     protected override void OnStart()
     {
-        // 永远朝角色自己的正前方冲刺
-        dashDirection = transform.forward;
-        dashDirection.y = 0f;
+        dashDirection = GetSelfRelativeMoveDirection(Input.Move);
 
         if (dashDirection.sqrMagnitude < 0.01f)
         {
-            dashDirection = Vector3.forward;
+            timer = 0f;
+            return;
         }
-
-        dashDirection.Normalize();
 
         Anim.TriggerDash();
     }
@@ -44,11 +52,29 @@ public class DashAction : TimedPlayerAction
         Controller.LockMovement();
 
         Motor.SetHorizontalVelocity(dashDirection * dashSpeed);
-        Motor.RotateToDirection(dashDirection);
     }
 
     protected override void OnEnd()
     {
         Motor.SetHorizontalVelocity(Vector3.zero);
+    }
+
+    private Vector3 GetSelfRelativeMoveDirection(Vector2 moveInput)
+    {
+        Vector3 forward = transform.forward;
+        Vector3 right = transform.right;
+
+        forward.y = 0f;
+        right.y = 0f;
+
+        forward.Normalize();
+        right.Normalize();
+
+        Vector3 direction = forward * moveInput.y + right * moveInput.x;
+
+        if (direction.sqrMagnitude < 0.01f)
+            return Vector3.zero;
+
+        return direction.normalized;
     }
 }

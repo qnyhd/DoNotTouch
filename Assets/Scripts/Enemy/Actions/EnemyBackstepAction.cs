@@ -41,6 +41,7 @@ public class EnemyBackstepAction : TimedEnemyAction
         backstepDirection.Normalize();
 
         Anim.SetSpeed(0f);
+        Anim.SetStrafing(false);
         Anim.TriggerBackstep();
     }
 
@@ -56,15 +57,23 @@ public class EnemyBackstepAction : TimedEnemyAction
         }
 
         Motor.SetHorizontalVelocity(backstepDirection * backstepSpeed);
+
         Anim.SetSpeed(0f);
+        Anim.SetStrafing(false);
     }
 
     protected override void OnEnd()
     {
         Motor.ForceStop();
+
         Anim.SetSpeed(0f);
+        Anim.SetStrafing(false);
 
         Controller.StartRandomIdlePauseAfterBackstep();
+
+        // 后撤结束后，仍然请求一次平移。
+        // 但如果玩家已经很近，EnemyStrafeAction 会立刻提前结束回 Idle。
+        Controller.RequestStrafe(true);
 
         Controller.SetState(EnemyState.Idle);
     }
