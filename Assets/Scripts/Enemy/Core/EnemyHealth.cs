@@ -14,9 +14,7 @@ public class EnemyHealth : CombatHealth
         motor = GetComponent<EnemyMotor>();
         controller = GetComponent<EnemyActionController>();
 
-        maxHealth = 10;
-        currentHealth = maxHealth;
-        attackDamage = 2;
+        // ²»ÒªÐ´ËÀ maxHealth / attackDamage
     }
 
     protected override void OnHit(GameObject attacker)
