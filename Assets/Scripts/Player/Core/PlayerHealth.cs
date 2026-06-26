@@ -14,9 +14,8 @@ public class PlayerHealth : CombatHealth
         motor = GetComponent<PlayerMotor>();
         controller = GetComponent<PlayerActionController>();
 
-        maxHealth = 10;
-        currentHealth = maxHealth;
-        attackDamage = 2;
+        // 不要在这里写死 maxHealth 和 attackDamage
+        // currentHealth 已经在 CombatHealth 的 Awake 里根据 maxHealth 初始化了
     }
 
     protected override void OnHit(GameObject attacker)
