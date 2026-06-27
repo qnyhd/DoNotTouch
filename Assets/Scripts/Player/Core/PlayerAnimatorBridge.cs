@@ -96,4 +96,10 @@ public class PlayerAnimatorBridge : MonoBehaviour
     {
         animator.SetTrigger(guardBreakHash);
     }
+
+    public void TriggerJumpOverrideDash()
+    {
+        animator.ResetTrigger(dashHash);
+        animator.SetTrigger(jumpHash);
+    }
 }
