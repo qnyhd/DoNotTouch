@@ -29,6 +29,10 @@ public class EnemyActionController : MonoBehaviour
 
     public bool IsInIdlePause => idlePauseTimer > 0f;
 
+    private bool forcedRangedAttackRequested;
+
+    public bool HasForcedRangedAttackRequest => forcedRangedAttackRequested;
+
     private void Awake()
     {
         Sensor = GetComponent<EnemySensor>();
@@ -157,5 +161,19 @@ public class EnemyActionController : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void RequestForcedRangedAttack()
+    {
+        forcedRangedAttackRequested = true;
+    }
+
+    public bool ConsumeForcedRangedAttackRequest()
+    {
+        if (!forcedRangedAttackRequested)
+            return false;
+
+        forcedRangedAttackRequested = false;
+        return true;
     }
 }
