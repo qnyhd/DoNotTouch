@@ -2,9 +2,16 @@ using UnityEngine;
 
 public class EnemyHealth : CombatHealth
 {
+    [Header("Death Collision")]
+    public bool disableCollisionOnDeath = true;
+    public bool disableTriggerCollidersToo = false;
+
     private EnemyAnimatorBridge anim;
     private EnemyMotor motor;
     private EnemyActionController controller;
+
+    private CharacterController characterController;
+    private Collider[] colliders;
 
     protected override void Awake()
     {
@@ -14,7 +21,12 @@ public class EnemyHealth : CombatHealth
         motor = GetComponent<EnemyMotor>();
         controller = GetComponent<EnemyActionController>();
 
-        // ²»ÒªÐ´ËÀ maxHealth / attackDamage
+        characterController = GetComponent<CharacterController>();
+        colliders = GetComponentsInChildren<Collider>();
+
+        maxHealth = 10;
+        currentHealth = maxHealth;
+        attackDamage = 2;
     }
 
     protected override void OnHit(GameObject attacker)
@@ -26,7 +38,7 @@ public class EnemyHealth : CombatHealth
 
         if (motor != null)
         {
-            motor.StopHorizontal();
+            motor.ForceStop();
         }
 
         if (anim != null)
@@ -44,7 +56,7 @@ public class EnemyHealth : CombatHealth
 
         if (motor != null)
         {
-            motor.StopHorizontal();
+            motor.ForceStop();
         }
 
         if (anim != null)
@@ -52,11 +64,38 @@ public class EnemyHealth : CombatHealth
             anim.TriggerDie();
         }
 
+        DisableCollisionAfterDeath();
+
         if (controller != null)
         {
             controller.enabled = false;
         }
 
         Debug.Log($"{gameObject.name} Dead");
+    }
+
+    private void DisableCollisionAfterDeath()
+    {
+        if (!disableCollisionOnDeath)
+            return;
+
+        if (characterController != null)
+        {
+            characterController.enabled = false;
+        }
+
+        if (colliders == null)
+            return;
+
+        foreach (Collider col in colliders)
+        {
+            if (col == null)
+                continue;
+
+            if (col.isTrigger && !disableTriggerCollidersToo)
+                continue;
+
+            col.enabled = false;
+        }
     }
 }
