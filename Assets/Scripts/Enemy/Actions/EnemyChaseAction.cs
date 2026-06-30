@@ -2,7 +2,14 @@ using UnityEngine;
 
 public class EnemyChaseAction : EnemyAction
 {
+    private EnemyNavigation navigation;
+
     public override int Priority => 10;
+
+    private void Awake()
+    {
+        navigation = GetComponent<EnemyNavigation>();
+    }
 
     public override void TickAction(float deltaTime)
     {
@@ -10,17 +17,31 @@ public class EnemyChaseAction : EnemyAction
             return;
 
         if (!Sensor.HasTargetInDetectRange())
-            return;
-
-        // 进入攻击距离后，必须停下并把动画速度归零
-        if (Sensor.HasTargetInAttackRange())
         {
-            Motor.ForceStop();
-            Anim.SetSpeed(0f);
+            StopChase();
             return;
         }
 
-        Vector3 direction = Sensor.GetDirectionToTarget();
+        if (Sensor.HasTargetInAttackRange())
+        {
+            StopChase();
+            return;
+        }
+
+        Vector3 direction = Vector3.zero;
+
+        if (navigation != null && navigation.IsReady)
+        {
+            navigation.SetDestination(Sensor.Target.position);
+            direction = navigation.GetPathDirection();
+        }
+
+        // 如果 NavMesh 临时给不出方向，就退回原来的直线方向
+        // 这样至少不会直接站着发呆
+        if (direction.sqrMagnitude < 0.01f)
+        {
+            direction = Sensor.GetDirectionToTarget();
+        }
 
         if (direction.sqrMagnitude < 0.01f)
         {
@@ -35,5 +56,16 @@ public class EnemyChaseAction : EnemyAction
         Motor.RotateToDirection(direction);
 
         Anim.SetSpeed(1f);
+    }
+
+    private void StopChase()
+    {
+        if (navigation != null)
+        {
+            navigation.StopPath();
+        }
+
+        Motor.ForceStop();
+        Anim.SetSpeed(0f);
     }
 }
