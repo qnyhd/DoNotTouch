@@ -223,7 +223,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dd171146c3a708340a31113957d12a3a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.04
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dd171146c3a708340a31113957d12a3a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -349,15 +349,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -510,7 +510,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 97760049ccaf03a4b992a7b2b4bee1cb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.04
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 97760049ccaf03a4b992a7b2b4bee1cb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -576,15 +576,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 9c1630f803ddeef40b9151920dc17f1d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9c1630f803ddeef40b9151920dc17f1d, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9c1630f803ddeef40b9151920dc17f1d, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9c1630f803ddeef40b9151920dc17f1d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -592,7 +592,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9c1630f803ddeef40b9151920dc17f1d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.08
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9c1630f803ddeef40b9151920dc17f1d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -943,17 +943,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThirdPersonCamera
   target: {fileID: 885179630}
-  distance: 5
+  distance: 3.52
   heightOffset: 1.4
-  mouseSensitivity: 2
+  mouseSensitivity: 2.5
   lockCursor: 1
   invertY: 0
-  minPitch: -25
-  maxPitch: 60
+  minPitch: -10
+  maxPitch: 50
   rotateCharacterWithCamera: 1
   characterRotateSmooth: 15
   followSmooth: 12
-  rotateSmooth: 15
+  rotateSmooth: 54.3
 --- !u!1001 &1508764146
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1573,7 +1573,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DashAction
   duration: 0.3
-  cooldown: 0.2
+  cooldown: 1
   dashSpeed: 10
 --- !u!114 &1599761588
 MonoBehaviour:
