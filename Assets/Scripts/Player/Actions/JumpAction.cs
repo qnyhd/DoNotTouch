@@ -26,7 +26,8 @@ public class JumpAction : PlayerAction
         if (health != null && health.IsDead)
             return;
 
-        if (!Motor.IsGrounded)
+        // ??????????????????????????????????
+        if (!Motor.CanJump)
             return;
 
         if (!CanJumpNow())
@@ -34,7 +35,7 @@ public class JumpAction : PlayerAction
 
         Motor.SetVerticalVelocity(jumpForce);
 
-        // 最终动画以跳跃为准
+        // ??????????????
         Anim.TriggerJump();
         //Anim.TriggerJumpOverrideDash();
     }
@@ -44,7 +45,7 @@ public class JumpAction : PlayerAction
         if (!Controller.HasActiveExclusiveAction(this))
             return true;
 
-        // 允许冲刺期间跳跃
+        // ?????????????
         if (allowJumpDuringDash && dashAction != null && dashAction.IsActive)
             return true;
 
