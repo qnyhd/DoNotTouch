@@ -4,8 +4,12 @@ public class DashAction : TimedPlayerAction
 {
     public float dashSpeed = 10f;
 
+    [Header("Stamina")]
+    public float dashStaminaCost = 2f;
+
     private Vector3 dashDirection;
     private PlayerHealth health;
+    private DashStamina stamina;
 
     public override int Priority => 100;
     public override bool BlocksOtherActions => true;
@@ -13,6 +17,7 @@ public class DashAction : TimedPlayerAction
     private void Awake()
     {
         health = GetComponent<PlayerHealth>();
+        stamina = GetComponent<DashStamina>();
     }
 
     protected override bool ShouldStart()
@@ -23,12 +28,15 @@ public class DashAction : TimedPlayerAction
         if (!Input.DashPressed)
             return false;
 
-        // 没有按移动方向，不冲刺
+        // ????????????????
         if (!Input.HasValidMoveInput)
             return false;
 
-        // 3个键以上、W+S、A+D 这种非法输入，不冲刺
+        // 3?????????W+S??A+D ???????????????
         if (Input.InvalidMoveInput)
+            return false;
+
+        if (stamina != null && !stamina.HasEnough(dashStaminaCost))
             return false;
 
         return true;
@@ -39,6 +47,12 @@ public class DashAction : TimedPlayerAction
         dashDirection = GetSelfRelativeMoveDirection(Input.Move);
 
         if (dashDirection.sqrMagnitude < 0.01f)
+        {
+            timer = 0f;
+            return;
+        }
+
+        if (stamina != null && !stamina.Consume(dashStaminaCost))
         {
             timer = 0f;
             return;
