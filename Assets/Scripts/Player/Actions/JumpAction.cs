@@ -4,20 +4,51 @@ public class JumpAction : PlayerAction
 {
     public float jumpForce = 7f;
 
-    public override int Priority => 50;
+    [Header("Dash Jump")]
+    public bool allowJumpDuringDash = true;
+
+    private PlayerHealth health;
+    private DashAction dashAction;
+
+    public override int Priority => 150;
+
+    private void Awake()
+    {
+        health = GetComponent<PlayerHealth>();
+        dashAction = GetComponent<DashAction>();
+    }
 
     public override void TickAction(float deltaTime)
     {
         if (!Input.JumpPressed)
             return;
 
-        if (!Motor.IsGrounded)
+        if (health != null && health.IsDead)
             return;
 
-        if (Controller.HasActiveExclusiveAction(this))
+        // ??????????????????????????????????
+        if (!Motor.CanJump)
+            return;
+
+        if (!CanJumpNow())
             return;
 
         Motor.SetVerticalVelocity(jumpForce);
+
+        // ??????????????
         Anim.TriggerJump();
+        //Anim.TriggerJumpOverrideDash();
+    }
+
+    private bool CanJumpNow()
+    {
+        if (!Controller.HasActiveExclusiveAction(this))
+            return true;
+
+        // ?????????????
+        if (allowJumpDuringDash && dashAction != null && dashAction.IsActive)
+            return true;
+
+        return false;
     }
 }

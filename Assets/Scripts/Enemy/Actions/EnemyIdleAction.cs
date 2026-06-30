@@ -10,19 +10,13 @@ public class EnemyIdleAction : EnemyAction
             return;
 
         if (Controller.IsMovementLocked)
-        {
-            Motor.ForceStop();
-            Anim.SetSpeed(0f);
-            Anim.SetStrafing(false);
             return;
-        }
 
         if (!Sensor.HasTargetInDetectRange())
         {
             Controller.SetState(EnemyState.Idle);
             Motor.ForceStop();
             Anim.SetSpeed(0f);
-            Anim.SetStrafing(false);
             return;
         }
 
@@ -31,7 +25,6 @@ public class EnemyIdleAction : EnemyAction
             Controller.SetState(EnemyState.Idle);
             Motor.ForceStop();
             Anim.SetSpeed(0f);
-            Anim.SetStrafing(false);
         }
     }
 }

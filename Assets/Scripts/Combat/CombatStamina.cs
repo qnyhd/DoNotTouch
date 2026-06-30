@@ -10,7 +10,13 @@ public class CombatStamina : MonoBehaviour
     public float recoverPerSecond = 1.5f;
     public float recoverDelayAfterConsume = 0.8f;
 
+    [Header("Interval Recover")]
+    public bool useIntervalRecover = false;
+    public float recoverInterval = 2f;
+    public float recoverAmountPerTick = 2f;
+
     private float recoverDelayTimer;
+    private float intervalRecoverTimer;
 
     private float recoverMultiplier = 1f;
 
@@ -37,6 +43,21 @@ public class CombatStamina : MonoBehaviour
         if (recoverDelayTimer > 0f)
         {
             recoverDelayTimer -= Time.deltaTime;
+            return;
+        }
+
+        if (useIntervalRecover)
+        {
+            intervalRecoverTimer += Time.deltaTime;
+            if (intervalRecoverTimer >= recoverInterval)
+            {
+                intervalRecoverTimer -= recoverInterval;
+                currentStamina = Mathf.Min(
+                    maxStamina,
+                    currentStamina + recoverAmountPerTick * recoverMultiplier
+                );
+            }
+
             return;
         }
 

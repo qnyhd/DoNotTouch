@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 public class EnemyAnimatorBridge : MonoBehaviour
@@ -7,18 +6,19 @@ public class EnemyAnimatorBridge : MonoBehaviour
     private Animator animator;
 
     private readonly int speedHash = Animator.StringToHash("Speed");
-
-    private readonly int strafeXHash = Animator.StringToHash("StrafeX");
-    private readonly int strafeLeftHash = Animator.StringToHash("StrafeLeft");
-
     private readonly int attackHash = Animator.StringToHash("Attack");
     private readonly int backstepHash = Animator.StringToHash("Backstep");
     private readonly int hitHash = Animator.StringToHash("Hit");
     private readonly int dieHash = Animator.StringToHash("Die");
 
+    private readonly int retreatingHash = Animator.StringToHash("Retreating");
+
     private readonly int blockingHash = Animator.StringToHash("Blocking");
     private readonly int blockCounterHash = Animator.StringToHash("BlockCounter");
     private readonly int guardBreakHash = Animator.StringToHash("GuardBreak");
+
+    private readonly int strafeXHash = Animator.StringToHash("StrafeX");
+    private readonly int strafeLeftHash = Animator.StringToHash("StrafeLeft");
 
     private void Awake()
     {
@@ -30,19 +30,9 @@ public class EnemyAnimatorBridge : MonoBehaviour
         animator.SetFloat(speedHash, speed, 0.1f, Time.deltaTime);
     }
 
-    public void SetStrafing(bool isStrafing)
+    public void SetRetreating(bool isRetreating)
     {
-        animator.SetBool(strafeXHash, isStrafing);
-    }
-
-    public void SetStrafeLeft(bool isLeft)
-    {
-        animator.SetBool(strafeLeftHash, isLeft);
-    }
-
-    public void SetBlocking(bool isBlocking)
-    {
-        animator.SetBool(blockingHash, isBlocking);
+        animator.SetBool(retreatingHash, isRetreating);
     }
 
     public void TriggerAttack()
@@ -65,6 +55,11 @@ public class EnemyAnimatorBridge : MonoBehaviour
         animator.SetTrigger(dieHash);
     }
 
+    public void SetBlocking(bool isBlocking)
+    {
+        animator.SetBool(blockingHash, isBlocking);
+    }
+
     public void TriggerBlockCounter()
     {
         animator.SetTrigger(blockCounterHash);
@@ -73,5 +68,15 @@ public class EnemyAnimatorBridge : MonoBehaviour
     public void TriggerGuardBreak()
     {
         animator.SetTrigger(guardBreakHash);
+    }
+
+    public void SetStrafing(bool isStrafing)
+    {
+        animator.SetBool(strafeXHash, isStrafing);
+    }
+
+    public void SetStrafeLeft(bool isLeft)
+    {
+        animator.SetBool(strafeLeftHash, isLeft);
     }
 }
