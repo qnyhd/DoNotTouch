@@ -19,18 +19,4 @@ public class CharacterStunVFXController : MonoBehaviour
             stunVFXRoot.SetActive(false);
         }
     }
-
-    private void Update()
-    {
-        // 测试用：按 H 显示眩晕，按 J 关闭眩晕
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            ShowStun();
-        }
-
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            HideStun();
-        }
-    }
 }
