@@ -81,6 +81,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ad133bef760cf4244b86a26e673fd375, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4601692042149032173}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ad133bef760cf4244b86a26e673fd375, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2424837238865677182}
   m_SourcePrefab: {fileID: 100100000, guid: ad133bef760cf4244b86a26e673fd375, type: 3}
 --- !u!1 &8440031955967167147 stripped
 GameObject:
@@ -154,3 +157,28 @@ MonoBehaviour:
     m_Bits: 128
   maxLifeTime: 3
   destroyDelayAfterImpact: 0.05
+--- !u!114 &2424837238865677182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8440031955967167147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a839e7b4e9c1b84b947a550d88b7a80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BreakableRock
+  brokenPrefab: {fileID: 3351133329747205376, guid: f946743e12cfa5c4b8f2522eb9f55454, type: 3}
+  dustEffectPrefab: {fileID: 77099685379617347, guid: 196f5fbff7f79fe488a633fd25a37c50, type: 3}
+  minBreakVelocity: 4
+  breakOnLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  explosionForce: 6
+  explosionRadius: 2
+  upwardModifier: 0.4
+  randomForce: 1.5
+  randomTorque: 8
+  chunkLifeTime: 3
+  shrinkDuration: 0.8

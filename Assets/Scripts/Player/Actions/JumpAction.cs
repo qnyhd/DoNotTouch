@@ -9,6 +9,7 @@ public class JumpAction : PlayerAction
 
     private PlayerHealth health;
     private DashAction dashAction;
+    private JumpLevelPenaltyAction jumpPenalty;
 
     public override int Priority => 150;
 
@@ -16,6 +17,7 @@ public class JumpAction : PlayerAction
     {
         health = GetComponent<PlayerHealth>();
         dashAction = GetComponent<DashAction>();
+        jumpPenalty = GetComponent<JumpLevelPenaltyAction>();
     }
 
     public override void TickAction(float deltaTime)
@@ -35,9 +37,8 @@ public class JumpAction : PlayerAction
 
         Motor.SetVerticalVelocity(jumpForce);
 
-        // ??????????????
         Anim.TriggerJump();
-        //Anim.TriggerJumpOverrideDash();
+        jumpPenalty?.NotifyJumpStarted();
     }
 
     private bool CanJumpNow()

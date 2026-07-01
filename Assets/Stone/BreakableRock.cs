@@ -5,7 +5,7 @@ public class BreakableRock : MonoBehaviour
 {
     [Header("Break")]
     public GameObject brokenPrefab;
-    public ParticleSystem dustPrefab;
+    public GameObject dustEffectPrefab;
 
     [Header("Impact Condition")]
     public float minBreakVelocity = 4f;
@@ -24,8 +24,20 @@ public class BreakableRock : MonoBehaviour
 
     private bool hasBroken = false;
 
+    public void TriggerBreak(Vector3 hitPoint)
+    {
+        if (hasBroken)
+            return;
+
+        Break(hitPoint);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
+        // 投石弹丸由 RockProjectile 统一触发，避免和伤害结算抢顺序
+        if (GetComponent<RockProjectile>() != null)
+            return;
+
         if (hasBroken)
             return;
 
@@ -48,11 +60,13 @@ public class BreakableRock : MonoBehaviour
     {
         hasBroken = true;
 
-        if (dustPrefab != null)
+        if (dustEffectPrefab != null)
         {
-            ParticleSystem dust = Instantiate(dustPrefab, hitPoint, Quaternion.identity);
-            dust.Play();
-            Destroy(dust.gameObject, 3f);
+            GameObject dustObj = Instantiate(dustEffectPrefab, hitPoint, Quaternion.identity);
+            ParticleSystem dust = dustObj.GetComponentInChildren<ParticleSystem>();
+            if (dust != null)
+                dust.Play();
+            Destroy(dustObj, 3f);
         }
 
         if (brokenPrefab != null)

@@ -572,6 +572,7 @@ MonoBehaviour:
   duration: 0.3
   cooldown: 0.2
   dashSpeed: 10
+  dashStaminaCost: 2
 --- !u!114 &291670062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -616,6 +617,9 @@ MonoBehaviour:
   currentStamina: 10
   recoverPerSecond: 2
   recoverDelayAfterConsume: 0.5
+  useIntervalRecover: 0
+  recoverInterval: 2
+  recoverAmountPerTick: 2
 --- !u!114 &291670065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1620,6 +1624,9 @@ MonoBehaviour:
   currentStamina: 10
   recoverPerSecond: 2
   recoverDelayAfterConsume: 0.5
+  useIntervalRecover: 0
+  recoverInterval: 2
+  recoverAmountPerTick: 2
 --- !u!114 &1386653843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2107,7 +2114,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -40.02
+      value: -36.82
       objectReference: {fileID: 0}
     - target: {fileID: 400108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2115,7 +2122,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.75
+      value: -6.18
       objectReference: {fileID: 0}
     - target: {fileID: 400108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       propertyPath: m_LocalRotation.w

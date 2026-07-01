@@ -14,6 +14,7 @@ public class RockProjectile : MonoBehaviour
     public float destroyDelayAfterImpact = 0.05f;
 
     private Rigidbody rb;
+    private BreakableRock breakableRock;
     private Collider[] projectileColliders;
 
     private Transform ownerRoot;
@@ -28,6 +29,7 @@ public class RockProjectile : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        breakableRock = GetComponent<BreakableRock>();
         projectileColliders = GetComponentsInChildren<Collider>();
 
         // 重点：没发射前不参与物理，不然场景里的 Rock 会自己掉下来砸人
@@ -165,6 +167,12 @@ public class RockProjectile : MonoBehaviour
         TryDamageRadius(impactPoint);
 
         DestroyTargetCircle();
+
+        if (breakableRock != null)
+        {
+            breakableRock.TriggerBreak(impactPoint);
+            return;
+        }
 
         Destroy(gameObject, destroyDelayAfterImpact);
     }
