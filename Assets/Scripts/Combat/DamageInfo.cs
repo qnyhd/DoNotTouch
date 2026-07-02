@@ -8,6 +8,7 @@ public struct DamageInfo
     public Vector3 hitPoint;
     public Vector3 attackDirection;
     public bool canBeBlocked;
+    public float knockbackDistance;
 
     public DamageInfo(
         int damage,
@@ -15,7 +16,8 @@ public struct DamageInfo
         GameObject attacker,
         Vector3 hitPoint,
         Vector3 attackDirection,
-        bool canBeBlocked = true
+        bool canBeBlocked = true,
+        float knockbackDistance = 0f
     )
     {
         this.damage = damage;
@@ -26,5 +28,6 @@ public struct DamageInfo
             ? attackDirection.normalized
             : Vector3.forward;
         this.canBeBlocked = canBeBlocked;
+        this.knockbackDistance = knockbackDistance;
     }
 }

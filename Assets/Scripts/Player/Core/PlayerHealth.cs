@@ -18,7 +18,7 @@ public class PlayerHealth : CombatHealth
         // currentHealth 已经在 CombatHealth 的 Awake 里根据 maxHealth 初始化了
     }
 
-    protected override void OnHit(GameObject attacker)
+    protected override void OnHit(DamageInfo info)
     {
         if (motor != null)
         {

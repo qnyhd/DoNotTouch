@@ -29,7 +29,7 @@ public class EnemyHealth : CombatHealth
         attackDamage = 2;
     }
 
-    protected override void OnHit(GameObject attacker)
+    protected override void OnHit(DamageInfo info)
     {
         if (controller != null)
         {
@@ -39,6 +39,14 @@ public class EnemyHealth : CombatHealth
         if (motor != null)
         {
             motor.ForceStop();
+
+            if (info.knockbackDistance > 0f)
+            {
+                motor.ApplyKnockback(
+                    info.attackDirection,
+                    info.knockbackDistance,
+                    hitStunDuration);
+            }
         }
 
         if (anim != null)
