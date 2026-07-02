@@ -13,9 +13,17 @@ public class JumpLevelPenaltyAction : PlayerAction
     [Header("References")]
     public CharacterStunVFXController stunVfx;
 
+    [Header("Stun VFX")]
+    [Tooltip("落地前多少米先显示眩晕。越大越早出现，0 = 落地瞬间才显示。")]
+    public float stunShowLeadDistance = 0.2f;
+    public LayerMask stunGroundLayers = ~0;
+    public float stunGroundRayDistance = 3f;
+
     private bool waitingLand;
+    private bool stunShownForJump;
     private float penaltyTimer;
     private bool wasGroundedLastFrame;
+    private CharacterController characterController;
 
     public bool IsInPenalty => penaltyTimer > 0f;
 
@@ -27,6 +35,8 @@ public class JumpLevelPenaltyAction : PlayerAction
     {
         if (stunVfx == null)
             stunVfx = GetComponent<CharacterStunVFXController>();
+
+        characterController = GetComponent<CharacterController>();
     }
 
     public void NotifyJumpStarted()
@@ -35,6 +45,7 @@ public class JumpLevelPenaltyAction : PlayerAction
             return;
 
         waitingLand = true;
+        stunShownForJump = false;
     }
 
     public override void TickAction(float deltaTime)
@@ -58,13 +69,63 @@ public class JumpLevelPenaltyAction : PlayerAction
             return;
         }
 
-        if (waitingLand && Motor.IsGrounded && !wasGroundedLastFrame)
+        if (waitingLand)
         {
-            waitingLand = false;
-            BeginPenalty();
+            TryShowStunBeforeLand();
+
+            if (Motor.IsGrounded && !wasGroundedLastFrame)
+            {
+                waitingLand = false;
+                BeginPenalty();
+            }
         }
 
         wasGroundedLastFrame = Motor.IsGrounded;
+    }
+
+    private void TryShowStunBeforeLand()
+    {
+        if (stunShownForJump || stunVfx == null || stunShowLeadDistance <= 0f)
+            return;
+
+        if (Motor.IsGrounded)
+            return;
+
+        if (!TryGetDistanceToGround(out float distance))
+            return;
+
+        if (distance > stunShowLeadDistance)
+            return;
+
+        stunShownForJump = true;
+        stunVfx.ShowStun();
+    }
+
+    private bool TryGetDistanceToGround(out float distance)
+    {
+        distance = 0f;
+
+        Vector3 origin = transform.position;
+        if (characterController != null)
+        {
+            origin = transform.position
+                + characterController.center
+                + Vector3.down * (characterController.height * 0.5f);
+        }
+
+        if (Physics.Raycast(
+                origin,
+                Vector3.down,
+                out RaycastHit hit,
+                stunGroundRayDistance,
+                stunGroundLayers,
+                QueryTriggerInteraction.Ignore))
+        {
+            distance = hit.distance;
+            return true;
+        }
+
+        return false;
     }
 
     private void BeginPenalty()
@@ -76,8 +137,10 @@ public class JumpLevelPenaltyAction : PlayerAction
         Motor.SetVerticalVelocity(0f);
         Anim.SetMove(Vector2.zero);
 
-        if (stunVfx != null)
+        if (stunVfx != null && !stunShownForJump)
             stunVfx.ShowStun();
+
+        stunShownForJump = false;
     }
 
     private void EndPenalty()

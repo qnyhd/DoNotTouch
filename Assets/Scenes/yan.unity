@@ -1435,6 +1435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4804853d79c65374287125f8e76000a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimationEventReceiver
+  hammerGroundHitVfx: {fileID: 0}
 --- !u!114 &143914129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1672,6 +1673,11 @@ MonoBehaviour:
   penaltyEnabled: 1
   penaltyDuration: 1.5
   stunVfx: {fileID: 143914148}
+  stunShowLeadDistance: 0.2
+  stunGroundLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  stunGroundRayDistance: 3
 --- !u!114 &143914148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1685,6 +1691,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterStunVFXController
   stunVFXRoot: {fileID: 2042285308}
+  showDelay: 0
+  hideDelay: 0
+  playbackSpeed: 1
+  startOffset: 0.3
+--- !u!114 &143914149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143914126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eefc2a1168e7c346b0b4ee0c65a38dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HammerGroundHitVFX
+  groundHitPrefab: {fileID: 8065526998264509722, guid: a412902b64a2db6438e0d40817f4d1e8, type: 3}
+  motor: {fileID: 0}
+  characterController: {fileID: 0}
+  forwardOffset: 1.2
+  footYOffset: 0.02
+  destroyAfter: 4
+  spawnDelay: 0
+  playbackSpeed: 1.2
+  startOffset: 0.4
+  requireGrounded: 1
 --- !u!1 &149089197
 GameObject:
   m_ObjectHideFlags: 0
@@ -7740,6 +7772,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 143914147}
+    - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 143914149}
   m_SourcePrefab: {fileID: 100100000, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
 --- !u!1 &910014758 stripped
 GameObject:
