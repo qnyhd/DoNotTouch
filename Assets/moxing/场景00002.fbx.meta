@@ -88,77 +88,77 @@ ModelImporter:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: texture_pbr_20250901
-    second: {fileID: 2800000, guid: 9d0b0587a49f712408032de24669d34b, type: 3}
+    second: {fileID: 2800000, guid: bf66b8965443ab94e8782e94ac9187a8, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: texture_pbr_20250901_metallic
-    second: {fileID: 2800000, guid: eaa1896586b206d43a1c067039d0f746, type: 3}
+    second: {fileID: 2800000, guid: 19754e201f20c5743a9d05f82cac3637, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: texture_pbr_20250901_normal
-    second: {fileID: 2800000, guid: c275cc40bef992b4e85ed16dba8d05dd, type: 3}
+    second: {fileID: 2800000, guid: 4fe53ce9aeb522642945d5746b255b21, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: texture_pbr_20250901_roughness
-    second: {fileID: 2800000, guid: 8de9347d5c47b8a4fa050acc2941c5e9, type: 3}
+    second: {fileID: 2800000, guid: bca98cfe710747943ab6810253dd5534, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: "\u4E3B\u89D2_bas"
-    second: {fileID: 2800000, guid: e95a20dffd7624f4d9305adaec3367c0, type: 3}
+    second: {fileID: 2800000, guid: 2a0e93d6e199cc24a8f737df9d49ba64, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: "\u4EBA\u50CF2_basecolor"
-    second: {fileID: 2800000, guid: 7ca6d719cb9b1cb4c9a66070c8e98156, type: 3}
+    second: {fileID: 2800000, guid: f66fde2d87c1f1a419bb1f779d07e605, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: "\u4EBA\u9762\u50CF_basecolor"
-    second: {fileID: 2800000, guid: 994feaa8c34453648be847bd844f9870, type: 3}
+    second: {fileID: 2800000, guid: b483ba6a50de843418d4251043ce4fa9, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: "\u5C0F\u77F3\u58A9_basecolor"
-    second: {fileID: 2800000, guid: b49447610e3f8da4fa644909f7dc2863, type: 3}
+    second: {fileID: 2800000, guid: c479e8737663f03478fb67c9c74b7b0c, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: "\u65D7\u5E1C_basecolor"
-    second: {fileID: 2800000, guid: 6d1f7b31b77f1fa44b805d324ec29395, type: 3}
+    second: {fileID: 2800000, guid: fdcb20b83e2f301428c1be05f28f2926, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: "\u6728\u67F1_basecolor"
-    second: {fileID: 2800000, guid: f059b9ac244cbc84dadd01145cfe4169, type: 3}
+    second: {fileID: 2800000, guid: 21989550302fdf04d873f7130d82229e, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: "\u68AF\u5B50_basecolor"
-    second: {fileID: 2800000, guid: 47a7c2d83ad79404880017f342c9d6fa, type: 3}
+    second: {fileID: 2800000, guid: 481d3e69c10e01741831db47f55ea89f, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: "\u77F3\u50CF3_basecolor"
-    second: {fileID: 2800000, guid: 5031d8ae1aae22b4eb8f8d380314f245, type: 3}
+    second: {fileID: 2800000, guid: 1c3e7315f005fa645933ba62d428d402, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: "\u796D\u575B\u5E73\u53F0_basecolor"
-    second: {fileID: 2800000, guid: 68ab0d9f9b76f744fa60312e300284cc, type: 3}
+    second: {fileID: 2800000, guid: 5dd4c7aa45ac4d947ba4a15e6505a696, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: "\u8349\u5730_basecolor"
-    second: {fileID: 2800000, guid: 0ef091916eb71d64b9b72acb2be83838, type: 3}
+    second: {fileID: 2800000, guid: 71244cdc51b00a447a7c282fec8572bd, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: "\u957F\u77F3\u58A9_basecolor"
-    second: {fileID: 2800000, guid: edb3d59cc2a53b04184e16a645593674, type: 3}
+    second: {fileID: 2800000, guid: 037e2dfac2b2a8946a20ebfcfdc7142e, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
