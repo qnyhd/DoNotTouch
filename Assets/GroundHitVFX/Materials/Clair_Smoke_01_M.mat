@@ -183,7 +183,7 @@ Material:
     - _AlphaSrcBlend: 1
     - _AlphaToMask: 0
     - _AlphaToMaskInspectorValue: 0
-    - _Alpha_Clip_Threshold: 0.5
+    - _Alpha_Clip_Threshold: 0.3
     - _Anisotropy: 0
     - _BUILTIN_AlphaClip: 0
     - _BUILTIN_Blend: 0
