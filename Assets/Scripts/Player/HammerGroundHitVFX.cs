@@ -37,7 +37,7 @@ public class HammerGroundHitVFX : MonoBehaviour
         if (groundHitPrefab == null)
             return;
 
-        if (requireGrounded && motor != null && !motor.IsGrounded)
+        if (!TryGetImpactPoint(out Vector3 spawnPoint))
             return;
 
         if (spawnDelay > 0f)
@@ -46,7 +46,28 @@ public class HammerGroundHitVFX : MonoBehaviour
             return;
         }
 
-        SpawnAtFeet();
+        SpawnAtImpactPoint(spawnPoint);
+    }
+
+    public bool TryGetImpactPoint(out Vector3 impactPoint)
+    {
+        impactPoint = default;
+
+        if (requireGrounded && motor != null && !motor.IsGrounded)
+            return false;
+
+        Vector3 foot = GetFootPosition();
+        Vector3 forward = transform.forward;
+        forward.y = 0f;
+
+        if (forward.sqrMagnitude > 0.0001f)
+            forward.Normalize();
+        else
+            forward = Vector3.forward;
+
+        impactPoint = foot + forward * forwardOffset;
+        impactPoint.y = foot.y + footYOffset;
+        return true;
     }
 
     private IEnumerator SpawnAfterDelay(float delay)
@@ -56,7 +77,10 @@ public class HammerGroundHitVFX : MonoBehaviour
         if (requireGrounded && motor != null && !motor.IsGrounded)
             yield break;
 
-        SpawnAtFeet();
+        if (!TryGetImpactPoint(out Vector3 spawnPoint))
+            yield break;
+
+        SpawnAtImpactPoint(spawnPoint);
     }
 
     private Vector3 GetFootPosition()
@@ -71,20 +95,8 @@ public class HammerGroundHitVFX : MonoBehaviour
         return transform.position;
     }
 
-    private void SpawnAtFeet()
+    private void SpawnAtImpactPoint(Vector3 spawnPoint)
     {
-        Vector3 foot = GetFootPosition();
-        Vector3 forward = transform.forward;
-        forward.y = 0f;
-
-        if (forward.sqrMagnitude > 0.0001f)
-            forward.Normalize();
-        else
-            forward = Vector3.forward;
-
-        Vector3 spawnPoint = foot + forward * forwardOffset;
-        spawnPoint.y = foot.y + footYOffset;
-
         GameObject fx = Instantiate(groundHitPrefab, spawnPoint, Quaternion.identity);
         ConfigureParticles(fx, playbackSpeed, startOffset);
         Destroy(fx, destroyAfter);

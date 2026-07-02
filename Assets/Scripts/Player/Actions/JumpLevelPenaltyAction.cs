@@ -11,11 +11,12 @@ public class JumpLevelPenaltyAction : PlayerAction
     public float penaltyDuration = 1.5f;
 
     [Header("References")]
+    public PlayerStunPresentation stunPresentation;
     public CharacterStunVFXController stunVfx;
 
     [Header("Stun VFX")]
-    [Tooltip("落地前多少米先显示眩晕。越大越早出现，0 = 落地瞬间才显示。")]
-    public float stunShowLeadDistance = 0.2f;
+    [Tooltip("落地前多少米先显示星星。0 = 落地瞬间才出现；越大越早（容易显得过早）。")]
+    public float stunShowLeadDistance = 0f;
     public LayerMask stunGroundLayers = ~0;
     public float stunGroundRayDistance = 3f;
 
@@ -33,6 +34,9 @@ public class JumpLevelPenaltyAction : PlayerAction
 
     private void Awake()
     {
+        if (stunPresentation == null)
+            stunPresentation = GetComponent<PlayerStunPresentation>();
+
         if (stunVfx == null)
             stunVfx = GetComponent<CharacterStunVFXController>();
 
@@ -85,7 +89,10 @@ public class JumpLevelPenaltyAction : PlayerAction
 
     private void TryShowStunBeforeLand()
     {
-        if (stunShownForJump || stunVfx == null || stunShowLeadDistance <= 0f)
+        if (stunShownForJump || stunShowLeadDistance <= 0f)
+            return;
+
+        if (stunPresentation == null && stunVfx == null)
             return;
 
         if (Motor.IsGrounded)
@@ -98,7 +105,11 @@ public class JumpLevelPenaltyAction : PlayerAction
             return;
 
         stunShownForJump = true;
-        stunVfx.ShowStun();
+
+        if (stunPresentation != null)
+            stunPresentation.ShowVfxOnly();
+        else
+            stunVfx?.ShowStun();
     }
 
     private bool TryGetDistanceToGround(out float distance)
@@ -137,8 +148,15 @@ public class JumpLevelPenaltyAction : PlayerAction
         Motor.SetVerticalVelocity(0f);
         Anim.SetMove(Vector2.zero);
 
-        if (stunVfx != null && !stunShownForJump)
+        if (stunPresentation != null)
+            stunPresentation.BeginStun();
+        else if (stunVfx != null && !stunShownForJump)
+        {
+            Anim.SetStunned(true);
             stunVfx.ShowStun();
+        }
+        else
+            Anim.SetStunned(true);
 
         stunShownForJump = false;
     }
@@ -147,7 +165,12 @@ public class JumpLevelPenaltyAction : PlayerAction
     {
         penaltyTimer = 0f;
 
-        if (stunVfx != null)
-            stunVfx.HideStun();
+        if (stunPresentation != null)
+            stunPresentation.EndStun();
+        else
+        {
+            Anim.SetStunned(false);
+            stunVfx?.HideStun();
+        }
     }
 }

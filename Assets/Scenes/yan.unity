@@ -1436,6 +1436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimationEventReceiver
   hammerGroundHitVfx: {fileID: 0}
+  hammerGroundSlam: {fileID: 0}
 --- !u!114 &143914129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1467,6 +1468,7 @@ MonoBehaviour:
   attackRange: 1.68
   attackRadius: 1.06
   staminaDamageOnBlock: 6
+  deferHitToHammerSlam: 1
   hittableLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -1672,8 +1674,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JumpLevelPenaltyAction
   penaltyEnabled: 1
   penaltyDuration: 1.5
+  stunPresentation: {fileID: 0}
   stunVfx: {fileID: 143914148}
-  stunShowLeadDistance: 0.2
+  stunShowLeadDistance: 0
   stunGroundLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -1717,6 +1720,61 @@ MonoBehaviour:
   playbackSpeed: 1.2
   startOffset: 0.4
   requireGrounded: 1
+--- !u!114 &143914150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143914126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca2926b47f89a7f4ebd77eadc8d21c7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerJumpLandDustVFX
+  jumpDustPrefab: {fileID: 8615033224491876904, guid: f9cf809829b3cd94199bef480f5912cc, type: 3}
+  landDustPrefab: {fileID: 2539666835497123587, guid: 4edc86852e67be945b1f4ff0bbc0c93c, type: 3}
+  motor: {fileID: 0}
+  characterController: {fileID: 0}
+  jumpSpawnPoint: {fileID: 1390360521}
+  landSpawnPoint: {fileID: 1136913007}
+  jumpSpawnDelay: 0
+  jumpStartOffset: 0
+  jumpPlaybackSpeed: 1
+  landSpawnDelay: 0
+  landStartOffset: 0
+  landPlaybackSpeed: 1
+  minAirTimeForLandDust: 0.08
+  jumpSpawnOffset: {x: 0, y: 0, z: 0}
+  jumpFootYOffset: 0.02
+  landSpawnOffset: {x: 0, y: 0, z: 0}
+  landFootYOffset: 0.02
+  destroyAfter: 2
+--- !u!114 &143914152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143914126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f96fd08dd985ba04a9b605d21f2d7a20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HammerGroundSlam
+  groundHitVfx: {fileID: 0}
+  attackAction: {fileID: 0}
+  playerHealth: {fileID: 0}
+  characterController: {fileID: 0}
+  slamRadius: 1.1
+  hittableLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  maxTargetHeightOffset: 1.5
+  knockbackBodyWidths: 2.5
+  dealDamage: 0
+  staminaDamageOnBlock: 6
+  canBeBlocked: 0
 --- !u!1 &149089197
 GameObject:
   m_ObjectHideFlags: 0
@@ -7723,6 +7781,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 400108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2042285309}
+    - targetCorrespondingSourceObject: {fileID: 400108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1390360521}
+    - targetCorrespondingSourceObject: {fileID: 400108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1136913007}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       insertIndex: -1
@@ -7775,6 +7839,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 143914149}
+    - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 143914150}
+    - targetCorrespondingSourceObject: {fileID: 100108, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 143914152}
   m_SourcePrefab: {fileID: 100100000, guid: 3067d36b7321e7842932d94ad2dbd80b, type: 3}
 --- !u!1 &910014758 stripped
 GameObject:
@@ -9864,6 +9934,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 26.6, y: 3.5, z: 0}
+--- !u!1 &1136913006
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1136913007}
+  m_Layer: 0
+  m_Name: LandDustPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1136913007
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136913006}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.014, y: 0.05, z: -0.014}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 143914142}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1193837204
 GameObject:
   m_ObjectHideFlags: 0
@@ -10967,6 +11068,37 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1390360520
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1390360521}
+  m_Layer: 0
+  m_Name: JumpDustPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1390360521
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1390360520}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.008, y: 0.05, z: 0.074}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 143914142}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1398137948 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d91c672efa22d4f47bfdc56c4aaedae1, type: 3}

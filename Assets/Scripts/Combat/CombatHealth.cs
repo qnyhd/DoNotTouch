@@ -62,10 +62,10 @@ public abstract class CombatHealth : MonoBehaviour, IDamageable
         }
 
         hitStunTimer = hitStunDuration;
-        OnHit(info.attacker);
+        OnHit(info);
     }
 
-    // 兼容旧代码，如果还有地方调用 TakeDamage(2, attacker)，也不会报错
+    // ??????????????е?????? TakeDamage(2, attacker)?????????
     public void TakeDamage(int damage, GameObject attacker)
     {
         DamageInfo info = new DamageInfo(
@@ -127,7 +127,7 @@ public abstract class CombatHealth : MonoBehaviour, IDamageable
         return null;
     }
 
-    protected abstract void OnHit(GameObject attacker);
+    protected abstract void OnHit(DamageInfo info);
 
     protected abstract void OnDeath(GameObject attacker);
 }

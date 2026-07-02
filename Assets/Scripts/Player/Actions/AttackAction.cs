@@ -5,10 +5,10 @@ public class AttackAction : TimedPlayerAction
 {
     public bool IsAttacking => IsActive;
 
-    // 这一刀是否已经打出伤害
+    // ?????????????????
     public bool HasHitThisAttack { get; private set; }
 
-    // 敌人是否还能对这一刀做出格挡反应
+    // ???????????????????????
     public bool CanEnemyBlockReact
     {
         get
@@ -17,7 +17,7 @@ public class AttackAction : TimedPlayerAction
         }
     }
 
-    // 为了兼容你之前写过的 EnemyBlockAction
+    // ???????????????? EnemyBlockAction
     public bool IsAttackThreatening => CanEnemyBlockReact;
 
     
@@ -32,10 +32,15 @@ public class AttackAction : TimedPlayerAction
     [Header("Block")]
     public float staminaDamageOnBlock = 3f;
 
+    [Header("Hammer Slam")]
+    [Tooltip("?? HammerGroundSlam ??????????????????????????? hitTime??")]
+    public bool deferHitToHammerSlam = true;
+
     public LayerMask hittableLayers = ~0;
 
     private bool hasHit;
     private PlayerHealth playerHealth;
+    private HammerGroundSlam hammerGroundSlam;
 
     private readonly HashSet<IDamageable> hitTargets = new HashSet<IDamageable>();
 
@@ -47,6 +52,7 @@ public class AttackAction : TimedPlayerAction
     private void Awake()
     {
         playerHealth = GetComponent<PlayerHealth>();
+        hammerGroundSlam = GetComponent<HammerGroundSlam>();
     }
 
     protected override bool ShouldStart()
@@ -79,8 +85,11 @@ public class AttackAction : TimedPlayerAction
         if (!hasHit && attackElapsedTime >= hitTime)
         {
             hasHit = true;
-            HasHitThisAttack = true;
 
+            if (deferHitToHammerSlam && hammerGroundSlam != null)
+                return;
+
+            HasHitThisAttack = true;
             HitTargets();
         }
     }
@@ -88,6 +97,11 @@ public class AttackAction : TimedPlayerAction
     protected override void OnEnd()
     {
         HasHitThisAttack = false;
+    }
+
+    public void NotifyHammerSlamHit()
+    {
+        HasHitThisAttack = true;
     }
 
     private void HitTargets()

@@ -23,6 +23,7 @@ public class PlayerAnimatorBridge : MonoBehaviour
     private readonly int blockingHash = Animator.StringToHash("Blocking");
     private readonly int blockCounterHash = Animator.StringToHash("BlockCounter");
     private readonly int guardBreakHash = Animator.StringToHash("GuardBreak");
+    private readonly int stunnedHash = Animator.StringToHash("Stunned");
 
     private void Awake()
     {
@@ -101,5 +102,10 @@ public class PlayerAnimatorBridge : MonoBehaviour
     {
         animator.ResetTrigger(dashHash);
         animator.SetTrigger(jumpHash);
+    }
+
+    public void SetStunned(bool isStunned)
+    {
+        animator.SetBool(stunnedHash, isStunned);
     }
 }

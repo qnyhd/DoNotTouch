@@ -18,6 +18,11 @@ public class CharacterStunVFXController : MonoBehaviour
     private Coroutine showCoroutine;
     private Coroutine hideCoroutine;
 
+    private void Awake()
+    {
+        SetStunActive(false);
+    }
+
     public void ShowStun()
     {
         StopRunningCoroutines();
